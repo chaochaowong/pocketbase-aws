@@ -12,7 +12,7 @@ The process is broken down into steps:
 
 ## Acknowledgement
 
-I would like to thank [David Alber](https://github.com/davidalber) for his guidance on DNS record configuration, Terraform configuration, and Ansible application deployment. His extensive help on debugging and troubleshotting wasgig crucial to the completion of this project.
+I would like to thank [David Alber](https://github.com/davidalber) for his guidance on DNS record configuration, Terraform configuration, and Ansible application deployment. His extensive help on debugging and troubleshotting was crucial to the completion of this project.
 
 ## Backups
 
