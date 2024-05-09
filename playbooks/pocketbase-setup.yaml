@@ -1,0 +1,57 @@
+---
+- name: pocketbase setup
+  hosts: pocketbase
+  become: true
+
+  tasks:
+    - name: Check pocketbase service status
+      ansible.builtin.systemd:
+        name: "pocketbase"
+      register: pocketbase_service_status
+
+    - name: Create pocketbase directory
+      ansible.builtin.file:
+        path: /var/www/pocketbase
+        state: directory
+        owner: pocketbase
+        group: pocketbase
+        mode: '0755'
+
+    - name: Install unzip on Ubuntu
+      ansible.builtin.apt:
+        name: unzip
+        state: present
+        update_cache: yes
+      
+    - name: Unarchive pocketbase zip file to be download
+      ansible.builtin.unarchive:
+        src: https://github.com/pocketbase/pocketbase/releases/download/v0.22.11/pocketbase_0.22.11_linux_arm64.zip
+        dest: /var/www/pocketbase
+        remote_src: yes
+      when: pocketbase_service_status.status.ActiveState != "active"
+
+    - name: Change owner of pocketbase directory
+      ansible.builtin.file:
+        path: /var/www/pocketbase
+        state: directory
+        recurse: yes
+        owner: pocketbase
+        group: pocketbase
+
+    - name: Install pocketbase systemd service file
+      ansible.builtin.copy:
+        src: static/pocketbase.service
+        dest: /etc/systemd/system/pocketbase.service
+        owner: root
+        group: root
+        mode: '0644'
+    
+    - name: Enable service pocketbase 
+      ansible.builtin.systemd_service:
+        name: pocketbase
+        enabled: true
+
+    - name: Start pocketbase service
+      ansible.builtin.systemd_service:
+        state: started
+        name: pocketbase

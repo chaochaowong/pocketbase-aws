@@ -1,0 +1,15 @@
+---
+- name: SSL setup
+  hosts: pocketbase
+  become: true
+
+  tasks:
+    - name: Install Certbot
+      community.general.snap:
+        classic: true
+        name: certbot
+
+    - name: Get SSL certificate
+      ansible.builtin.command:
+cmd: certbot --nginx --test-cert -n --agree-tos -m youremail --domains pocketbase.somewhere.com
+        creates: /etc/letsencrypt/live/pb.bobolink.quest/fullchain.pem

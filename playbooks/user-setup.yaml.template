@@ -1,0 +1,18 @@
+---
+- name: pocketbase user setup
+  hosts: pocketbase
+  become: true
+
+  tasks:
+    - name: Create pocketbase user
+      ansible.builtin.user:
+        name: pocketbase
+        create_home: true
+        state: present
+        shell: /bin/bash
+
+    - name: Set authorized key
+      ansible.posix.authorized_key:
+        user: pocketbase
+        state: present
+        key: "{{ lookup('file', '/path/to/ssh/public_key') }}"

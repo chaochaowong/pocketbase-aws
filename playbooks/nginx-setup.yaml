@@ -1,0 +1,38 @@
+---
+- name: NGINX setup
+  hosts: pocketbase
+  become: true
+
+  tasks:
+    - name: Install NGINX
+      ansible.builtin.apt:
+        name: nginx-core
+        state: present
+        update_cache: yes
+
+    - name: Install pocketbase NGINX conf
+      ansible.builtin.copy:
+        src: static/pocketbase.nginx.conf
+        dest: /etc/nginx/sites-available/pocketbase
+        owner: root
+        group: root
+        mode: '0644'
+        force: false
+
+    - name: Link pocketbase NGINX conf to sites-enabled
+      ansible.builtin.file:
+        src: /etc/nginx/sites-available/pocketbase
+        dest: /etc/nginx/sites-enabled/pocketbase
+        owner: root
+        group: root
+        state: link
+
+    - name: Remove default NGINX conf from sites-enabled
+      ansible.builtin.file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+
+    - name: Restart NGINX service
+      ansible.builtin.systemd_service:
+        state: restarted
+        name: nginx

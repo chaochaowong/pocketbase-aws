@@ -1,0 +1,8 @@
+---
+- name: Configure pocketbase instance
+  hosts: pocketbase
+
+- import_playbook: user-setup.yaml
+- import_playbook: nginx-setup.yaml
+- import_playbook: pocketbase-setup.yaml
+- import_playbook: certbot-setup.yaml

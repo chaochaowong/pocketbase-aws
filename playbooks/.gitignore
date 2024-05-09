@@ -1,0 +1,4 @@
+inventory
+user-setup.yaml
+certbot-setup.yaml
+static/pocketbase.nginx.conf
