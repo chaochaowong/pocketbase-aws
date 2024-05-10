@@ -1,7 +1,7 @@
-# pocketbase Terraform Module
+# PocketBase Terraform Module
 
 This directory contains a Terraform module that creates AWS
-infrastructure to run your pocketbase instance. This Terraform step
+infrastructure to run your PocketBase instance. This Terraform step
 will:
 - Deploy all resources to the AWS us-west-2 region
 - Create a VPC
@@ -107,14 +107,11 @@ To alter the infrastructure to match the Terraform module's configuration, do:
 $ terraform apply
 ```
 
-![Effect of `terraform
-apply`](https://github.com/davidalber/screengifs/blob/main/pocketbase-aws/terraform-apply.gif)
-
 Once this completes successfully, the infrastructure is set up. Note
 that the IP address of the EC2 instance is output. Make a note of it
 because you will need it later.
 
-## Tearing Down the pocketbase Infrastructure
+## Tearing Down the PocketBase Infrastructure
 
 If you want to shut down and destroy the infrastructure set up by this
 module, do:
